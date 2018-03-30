@@ -4,11 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.rahul.forum.QuestionCommentActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cmmessageRec"
+        android:layout_width="match_parent"
+        android:layout_height="424dp"
+        android:layout_weight="1">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ques"/>
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/messageRec"
+        android:layout_weight="0"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="300dp"
+            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/cmeditMessageE"/>
+
+        <Button
+            android:id="@+id/sendButton"
+            android:layout_width="wrap_content"
+            android:textSize="10dp"
+            android:textStyle="italic"
+            android:onClick="cmsendButtonClicked"
+            android:text="send"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
 
 </LinearLayout>

@@ -39,19 +39,11 @@
             android:textSize="10dp"
             android:textStyle="italic"
             android:onClick="sendButtonClicked"
-            android:text="ADD"
+            android:text="Post"
             android:layout_height="wrap_content"
             tools:ignore="OnClick" />
 
     </LinearLayout>
-
-
-
-
-
-
-
-
 
 
 

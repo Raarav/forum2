@@ -16,12 +16,13 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity {
+public class  MainActivity extends AppCompatActivity {
 
     private EditText editMessage;
     private DatabaseReference mDatabase;
     private RecyclerView mMessageList;
-    //private CardView cardView;
+    private int i=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +35,18 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         mMessageList.setLayoutManager(linearLayoutManager);
-        //cardView= (CardView) findViewById(R.id.qcardview);
+
 
     }
 
     public void sendButtonClicked(View view) {
         final String messageValue = editMessage.getText().toString().trim();
         if (!TextUtils.isEmpty(messageValue)) {
-            final DatabaseReference newPost = mDatabase.push();
-            newPost.child("Question").setValue(messageValue);
+            DatabaseReference newpost;
+            newpost = mDatabase.push();
+            newpost.child("Question").setValue(messageValue);
+           // mDatabase.child("Question"+i);
+            editMessage.setText("");
 
         }
 
@@ -60,14 +64,7 @@ public class MainActivity extends AppCompatActivity {
         ) {
             @Override
             protected void populateViewHolder(final MessageViewHolder viewHolder, final Message model, int position) {
-              /* cardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
-                        Intent i = new Intent(getApplicationContext(), forumcomment.class);
-                        startActivity(i);
-                    }
-                });*/
 
                 final String post_key = getRef(position).getKey();
 
@@ -76,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                    public void onClick(View v) {
 
                        Intent openComment = new Intent(MainActivity.this , QuestionCommentActivity.class);
-                       openComment.putExtra("QUES",model.getQuestion());
                        openComment.putExtra("POST_KEY",post_key);
                        startActivity(openComment);
                    }
