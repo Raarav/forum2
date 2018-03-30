@@ -21,5 +21,12 @@ public class fcmMessageViewHolder extends RecyclerView.ViewHolder {
         TextView message_content = (TextView) cmView.findViewById(R.id.cmmessageText);
         message_content.setText(Reply);
 
+
+    }
+
+    public void setTime(String time) {
+
+        TextView cmTime = (TextView) cmView.findViewById(R.id.forumCmTime);
+        cmTime.setText(time);
     }
 }

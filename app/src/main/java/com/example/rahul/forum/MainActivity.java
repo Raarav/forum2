@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 
 public class  MainActivity extends AppCompatActivity {
 
@@ -22,6 +25,9 @@ public class  MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private RecyclerView mMessageList;
     private int i=0;
+    private Long fnow, fserverTime;
+    private String fmessageTime;
+
 
 
     @Override
@@ -45,6 +51,7 @@ public class  MainActivity extends AppCompatActivity {
             DatabaseReference newpost;
             newpost = mDatabase.push();
             newpost.child("Question").setValue(messageValue);
+            newpost.child("ftime").setValue(ServerValue.TIMESTAMP);
            // mDatabase.child("Question"+i);
             editMessage.setText("");
 
@@ -56,6 +63,8 @@ public class  MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        Query query = mDatabase.orderByChild("ftime");
+
         FirebaseRecyclerAdapter<Message, MessageViewHolder> FBRA = new FirebaseRecyclerAdapter<Message, MessageViewHolder>(
                 Message.class,
                 R.layout.fcmsinglerow,
@@ -64,6 +73,19 @@ public class  MainActivity extends AppCompatActivity {
         ) {
             @Override
             protected void populateViewHolder(final MessageViewHolder viewHolder, final Message model, int position) {
+
+                fserverTime = model.getfTime();
+
+                fnow = System.currentTimeMillis();
+
+                try {
+
+                    fmessageTime = String.valueOf(DateUtils.getRelativeTimeSpanString(fserverTime, fnow, 0L, DateUtils.FORMAT_ABBREV_ALL));
+
+                    viewHolder.setfTime(fmessageTime);
+                }catch (Exception e){
+
+                }
 
 
                 final String post_key = getRef(position).getKey();

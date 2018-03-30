@@ -7,14 +7,19 @@ package com.example.rahul.forum;
 public class Message {
 
     private String Question;
+    private Long ftime;
 
 
-    public Message(String content) {
+    public Message(String content,Long ftime) {
+        this.ftime = ftime;
 
          this.Question = content;
     }
 
     public Message() {
+    }
+    public void setfTime(Long ftime) {
+        this.ftime = ftime;
     }
 
     public void setQuestion(String content) {
@@ -23,6 +28,10 @@ public class Message {
 
     public String getQuestion() {
         return Question;
+    }
+
+    public Long getfTime() {
+        return ftime;
     }
 }
 

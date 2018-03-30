@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 
 public class QuestionCommentActivity extends AppCompatActivity {
 
@@ -22,6 +25,8 @@ public class QuestionCommentActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private RecyclerView mMessageList;
     private String post_key;
+    private Long now, serverTime;
+    private String messageTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class QuestionCommentActivity extends AppCompatActivity {
 
             DatabaseReference replyDb = mDatabase.push();
             replyDb.child("Reply").setValue(messageValue);
+            replyDb.child("time").setValue(ServerValue.TIMESTAMP);
             cmeditMessage.setText("");
 
         }
@@ -69,6 +75,8 @@ public class QuestionCommentActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        Query query = mDatabase.orderByChild("time");
 
         FirebaseRecyclerAdapter<fcm, fcmMessageViewHolder> fcmadapter = new FirebaseRecyclerAdapter<fcm, fcmMessageViewHolder>(
                 fcm.class,
@@ -79,6 +87,19 @@ public class QuestionCommentActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(fcmMessageViewHolder viewHolder, fcm model, int position) {
                 viewHolder.setReply(model.getReply());
+
+                serverTime = model.getTime();
+
+                now = System.currentTimeMillis();
+
+                try {
+
+                    messageTime = String.valueOf(DateUtils.getRelativeTimeSpanString(serverTime, now, 0L, DateUtils.FORMAT_ABBREV_ALL));
+
+                    viewHolder.setTime(messageTime);
+                }catch (Exception e){
+
+                }
 
             }
 

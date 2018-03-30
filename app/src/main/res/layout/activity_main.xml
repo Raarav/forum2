@@ -8,6 +8,13 @@
     android:orientation="vertical"
     tools:context="com.example.rahul.forum.MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/messageRec"
         android:layout_width="match_parent"
@@ -31,7 +38,8 @@
             android:textSize="20dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:id="@+id/editMessageE"/>
+            android:id="@+id/editMessageE"
+            android:hint="put your query here!!"/>
 
         <Button
             android:id="@+id/sendButton"

@@ -7,14 +7,19 @@ package com.example.rahul.forum;
 public class fcm {
 
     private String Reply;
+    private Long time;
 
 
-    public fcm(String Reply) {
-
+    public fcm(String Reply,Long time) {
+        this.time = time;
         this.Reply = Reply;
     }
 
     public fcm() {
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
     }
 
     public String setReply(String Reply) {
@@ -24,5 +29,9 @@ public class fcm {
 
     public String getReply() {
         return Reply;
+    }
+
+    public Long getTime() {
+        return time;
     }
 }

@@ -29,5 +29,11 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
 
     }
 
+    public void setfTime(String ftime) {
+
+        TextView cmTime = (TextView) mView.findViewById(R.id.forumTime);
+        cmTime.setText(ftime);
+    }
+
 
 }

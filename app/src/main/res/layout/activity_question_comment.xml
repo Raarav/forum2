@@ -7,6 +7,64 @@
     android:orientation="vertical"
     tools:context="com.example.rahul.forum.QuestionCommentActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/messageshape">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/profile_image"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/qimage"
+            />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#536DFE"
+                android:text="The maker Team"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/usernameText"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hello friend "
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="30dp"
+                android:textColor="#000000"
+                android:id="@+id/messageText"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12:00 am"
+                android:textColor="#000000"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/forumTime"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="end"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cmmessageRec"
         android:layout_width="match_parent"
@@ -30,7 +88,8 @@
             android:textSize="20dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:id="@+id/cmeditMessageE"/>
+            android:id="@+id/cmeditMessageE"
+            />
 
         <Button
             android:id="@+id/sendButton"
