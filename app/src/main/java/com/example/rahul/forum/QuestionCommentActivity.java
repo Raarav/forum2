@@ -40,6 +40,9 @@ public class QuestionCommentActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         post_key = intent.getStringExtra("POST_KEY");
+        String message=intent.getStringExtra(MainActivity.message);
+
+
 
 
 
@@ -47,12 +50,15 @@ public class QuestionCommentActivity extends AppCompatActivity {
         //Toast.makeText(this, post_key, Toast.LENGTH_SHORT).show();
 
         cmeditMessage = (EditText) findViewById(R.id.cmeditMessageE);
+        quesText=(TextView) findViewById(R.id.messageText);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Forum").child(post_key).child("Replies");
         mMessageList = (RecyclerView) findViewById(R.id.cmmessageRec);
         mMessageList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         mMessageList.setLayoutManager(linearLayoutManager);
+
+        quesText.setText(message);
 
 
     }

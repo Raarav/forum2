@@ -27,6 +27,7 @@ public class  MainActivity extends AppCompatActivity {
     private int i=0;
     private Long fnow, fserverTime;
     private String fmessageTime;
+    public static  final String message="";
 
 
 
@@ -94,8 +95,12 @@ public class  MainActivity extends AppCompatActivity {
                    @Override
                    public void onClick(View v) {
 
+
+
                        Intent openComment = new Intent(MainActivity.this , QuestionCommentActivity.class);
                        openComment.putExtra("POST_KEY",post_key);
+                       String msg=editMessage.getText().toString();
+                       openComment.putExtra(message,msg);
                        startActivity(openComment);
                    }
                });
