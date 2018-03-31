@@ -27,6 +27,7 @@ public class QuestionCommentActivity extends AppCompatActivity {
     private String post_key;
     private Long now, serverTime;
     private String messageTime;
+    private TextView fcmmessageText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +41,17 @@ public class QuestionCommentActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         post_key = intent.getStringExtra("POST_KEY");
-        String message=intent.getStringExtra(MainActivity.message);
+       // String message=intent.getStringExtra("message");
+        String message = getIntent().getExtras().getString("message");
 
 
 
 
-
-        Toast.makeText(this, "Reply", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         //Toast.makeText(this, post_key, Toast.LENGTH_SHORT).show();
 
         cmeditMessage = (EditText) findViewById(R.id.cmeditMessageE);
+        fcmmessageText = (TextView) findViewById(R.id.messageText1);
         quesText=(TextView) findViewById(R.id.messageText);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Forum").child(post_key).child("Replies");
         mMessageList = (RecyclerView) findViewById(R.id.cmmessageRec);
@@ -58,7 +60,7 @@ public class QuestionCommentActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         mMessageList.setLayoutManager(linearLayoutManager);
 
-        quesText.setText(message);
+        fcmmessageText.setText(message);
 
 
     }
