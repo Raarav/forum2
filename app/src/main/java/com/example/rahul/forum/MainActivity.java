@@ -48,23 +48,25 @@ public class  MainActivity extends AppCompatActivity {
 
 
 
-        textView= (TextView)findViewById(R.id.textView2);
+        textView= (TextView)findViewById(R.id.textView);
 
         loc = getIntent().getStringExtra("loc");
         post_key= getIntent().getStringExtra("post_string");
 
         if(loc.equals("main")) {
             textView.setMaxHeight(0);
+           //linearLayout.removeView(textView);
             mDatabase = FirebaseDatabase.getInstance().getReference().child("Forum");
         } else
         {
+
+
             textView.setTextSize(26);
             mDatabase = FirebaseDatabase.getInstance().getReference().child("Forum").child(post_key).child("Replies");
         }
 
 
         textView.setText(s);
-
 
 
 
