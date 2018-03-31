@@ -13,6 +13,8 @@ public class first extends AppCompatActivity {
         Intent intent = new Intent(this,MainActivity.class);
         intent.putExtra("loc","main");
         intent.putExtra("post_key","null");
+        intent.putExtra("ques"," ");
+
         startActivity(intent);
     }
 }

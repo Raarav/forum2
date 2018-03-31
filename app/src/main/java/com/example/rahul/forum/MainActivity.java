@@ -23,8 +23,8 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 public class  MainActivity extends AppCompatActivity {
-private String loc=new String();
-private String post_key=null;
+    private String loc=new String();
+    private String post_key=null;
     private EditText editMessage;
     private DatabaseReference mDatabase;
     private RecyclerView mMessageList;
@@ -34,26 +34,39 @@ private String post_key=null;
     public static  final String message="message";
     private String question;
     public String questionSaver;
-LinearLayout linearLayout;
-
+    LinearLayout linearLayout;
+    LinearLayout childLinear;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         editMessage = (EditText) findViewById(R.id.editMessageE);
+       String s= getIntent().getStringExtra("ques");
+        linearLayout=(LinearLayout) findViewById(R.id.activity_main);
+
+
+
+        textView= (TextView)findViewById(R.id.textView2);
+
         loc = getIntent().getStringExtra("loc");
         post_key= getIntent().getStringExtra("post_string");
+
         if(loc.equals("main")) {
+            textView.setMaxHeight(0);
             mDatabase = FirebaseDatabase.getInstance().getReference().child("Forum");
         } else
         {
+            textView.setTextSize(26);
             mDatabase = FirebaseDatabase.getInstance().getReference().child("Forum").child(post_key).child("Replies");
         }
 
-        linearLayout=(LinearLayout) findViewById(R.id.activity_main);
-        TextView textView = new TextView(this);
-        textView.setText;
+
+        textView.setText(s);
+
+
+
 
         mMessageList = (RecyclerView) findViewById(R.id.messageRec);
         mMessageList.setHasFixedSize(true);
@@ -72,10 +85,10 @@ LinearLayout linearLayout;
             newpost = mDatabase.push();
 
 
-                newpost.child("Question").setValue(messageValue);
-                newpost.child("ftime").setValue(ServerValue.TIMESTAMP);
-                // mDatabase.child("Question"+i);
-                //xs kxn  editMessage.setText("");
+            newpost.child("Question").setValue(messageValue);
+            newpost.child("ftime").setValue(ServerValue.TIMESTAMP);
+            // mDatabase.child("Question"+i);
+            //xs kxn  editMessage.setText("");
 
         }
 
@@ -112,39 +125,43 @@ LinearLayout linearLayout;
 
                 final String post_key = getRef(position).getKey();
 
-               viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
 
 
 
 
-                     //  Intent openComment = new Intent(MainActivity.this , QuestionCommentActivity.class);
-                       //openComment.putExtra("POST_KEY",post_key);
-                       DatabaseReference mref=mDatabase.child(post_key).child("Question");
-                       ValueEventListener valueEventListener=new ValueEventListener() {
-                           @Override
-                           public void onDataChange(DataSnapshot dataSnapshot) {
+                        //  Intent openComment = new Intent(MainActivity.this , QuestionCommentActivity.class);
+                        //openComment.putExtra("POST_KEY",post_key);
+                        DatabaseReference mref=mDatabase.child(post_key).child("Question");
+                        ValueEventListener valueEventListener=new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                               question=dataSnapshot.getValue().toString();
+                                question=dataSnapshot.getValue().toString();
 
-                           }
+                            }
 
-                           @Override
-                           public void onCancelled(DatabaseError databaseError) {
-                               Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                           }
-                       };
-                       mref.addValueEventListener(valueEventListener);
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        };
+                        mref.addValueEventListener(valueEventListener);
 
-                       //openComment.putExtra(questionSaver,question);
-                        Intent intent = new Intent(getBaseContext(),MainActivity.class);
-                      intent.putExtra("loc","form");
-                      intent.putExtra("post_string",post_key);
-                       startActivity(intent);
-                   }
-               });
+                        //openComment.putExtra(questionSaver,question);
+                        if(loc.equals("main")) {
+                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                            intent.putExtra("loc", "form");
+                            intent.putExtra("post_string", post_key);
+                            intent.putExtra("ques", question);
+                            //intent.putExtra("intentDetail","answer");
+                            startActivity(intent);
+                        }
+                    }
+                });
 
                 viewHolder.setQuestion(model.getQuestion());
 
