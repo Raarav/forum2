@@ -42,12 +42,14 @@ public class QuestionCommentActivity extends AppCompatActivity {
 
         post_key = intent.getStringExtra("POST_KEY");
        // String message=intent.getStringExtra("message");
-        String message = getIntent().getExtras().getString("message");
+
+        MainActivity object=new MainActivity();
+        String message = intent.getStringExtra(object.questionSaver);
 
 
 
 
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Reply", Toast.LENGTH_SHORT).show();
         //Toast.makeText(this, post_key, Toast.LENGTH_SHORT).show();
 
         cmeditMessage = (EditText) findViewById(R.id.cmeditMessageE);

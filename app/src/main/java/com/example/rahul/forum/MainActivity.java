@@ -14,13 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 
 public class  MainActivity extends AppCompatActivity {
-
+private String loc=new String();
+private String post_key=null;
     private EditText editMessage;
     private DatabaseReference mDatabase;
     private RecyclerView mMessageList;
@@ -28,7 +32,9 @@ public class  MainActivity extends AppCompatActivity {
     private Long fnow, fserverTime;
     private String fmessageTime;
     public static  final String message="message";
-
+    private String question;
+    public String questionSaver;
+LinearLayout linearLayout;
 
 
     @Override
@@ -36,12 +42,25 @@ public class  MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         editMessage = (EditText) findViewById(R.id.editMessageE);
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Forum");
+        loc = getIntent().getStringExtra("loc");
+        post_key= getIntent().getStringExtra("post_string");
+        if(loc.equals("main")) {
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("Forum");
+        } else
+        {
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("Forum").child(post_key).child("Replies");
+        }
+
+        linearLayout=(LinearLayout) findViewById(R.id.activity_main);
+        TextView textView = new TextView(this);
+        textView.setText;
+
         mMessageList = (RecyclerView) findViewById(R.id.messageRec);
         mMessageList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         mMessageList.setLayoutManager(linearLayoutManager);
+
 
 
     }
@@ -51,10 +70,12 @@ public class  MainActivity extends AppCompatActivity {
         if (!TextUtils.isEmpty(messageValue)) {
             DatabaseReference newpost;
             newpost = mDatabase.push();
-            newpost.child("Question").setValue(messageValue);
-            newpost.child("ftime").setValue(ServerValue.TIMESTAMP);
-           // mDatabase.child("Question"+i);
-          //xs kxn  editMessage.setText("");
+
+
+                newpost.child("Question").setValue(messageValue);
+                newpost.child("ftime").setValue(ServerValue.TIMESTAMP);
+                // mDatabase.child("Question"+i);
+                //xs kxn  editMessage.setText("");
 
         }
 
@@ -97,11 +118,31 @@ public class  MainActivity extends AppCompatActivity {
 
 
 
-                       Intent openComment = new Intent(MainActivity.this , QuestionCommentActivity.class);
-                       openComment.putExtra("POST_KEY",post_key);
-                       String msg=editMessage.getText().toString();
-                       openComment.putExtra("message",msg);
-                       startActivity(openComment);
+
+
+                     //  Intent openComment = new Intent(MainActivity.this , QuestionCommentActivity.class);
+                       //openComment.putExtra("POST_KEY",post_key);
+                       DatabaseReference mref=mDatabase.child(post_key).child("Question");
+                       ValueEventListener valueEventListener=new ValueEventListener() {
+                           @Override
+                           public void onDataChange(DataSnapshot dataSnapshot) {
+
+                               question=dataSnapshot.getValue().toString();
+
+                           }
+
+                           @Override
+                           public void onCancelled(DatabaseError databaseError) {
+                               Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                           }
+                       };
+                       mref.addValueEventListener(valueEventListener);
+
+                       //openComment.putExtra(questionSaver,question);
+                        Intent intent = new Intent(getBaseContext(),MainActivity.class);
+                      intent.putExtra("loc","form");
+                      intent.putExtra("post_string",post_key);
+                       startActivity(intent);
                    }
                });
 
